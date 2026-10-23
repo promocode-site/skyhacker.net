@@ -1944,6 +1944,19 @@
     <script>
         // platform-status 접기/펼치기 기능
         document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('a.discount-check-btn, a.platform-name').forEach(function(link) {
+                link.addEventListener('click', function(event) {
+                    if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+                    event.preventDefault();
+                    const opened = window.open(link.href, '_blank');
+                    if (opened) {
+                        opened.opener = null;
+                    } else {
+                        window.location.assign(link.href);
+                    }
+                });
+            });
+
             // 모든 platform-status 요소에 대해 기능 적용
             const platformStatuses = document.querySelectorAll('.platform-status');
             
